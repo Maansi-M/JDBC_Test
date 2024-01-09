@@ -1,88 +1,87 @@
 package TEST1;
 
+import TEST1.DAO.ServiceImpl;
+import TEST1.DTO.Product;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class MainApp {
 
-    static FilmService filmservice = new FilmImpl();
-    static Scanner sc1 = new Scanner(System.in);
+    static Scanner sc = new Scanner(System.in);
+    static ServiceImpl service = new ServiceImpl();
+
     public static void main(String[] args) {
 
-        System.out.println("Select Operation");
-        System.out.println("1. Add Film Info");
-        System.out.println("2. Remove ");
-        System.out.println("3. Update Film");
-        System.out.println("4. Display Film");
-        System.out.println("5. Exit Film");
-        int ch = sc1.nextInt();
+        System.out.println("\nSELECT OPERATION");
+        System.out.println("1. DISPLAY ALL PRODUCTS");
+        System.out.println("2. Remove Product");
+        System.out.println("3. Update Product");
+        System.out.println("4. PLACE ORDER ");
+        System.out.println("5. DISPLAY ALL ORDERS ");
+        System.out.println("6. Exit ");
+        int ch = sc.nextInt();
 
-        switch (ch){
-            case 1 :
-                    addFilm();
-                    break;
-            case 2 :
-                    //removeFilm
-                    break;
-            case 3 :
-                    updateFilm();
-                    break;
-            case 4 :
-                    //displayFilm
-                    break;
+        switch (ch) {
+            case 1:
+                displayAllProducts();
+                break;
+            case 2:
+                removeProduct();
+                break;
+            case 3:
+                //updateProduct();
+                break;
+            case 4:
+                //placeOrder();
+                break;
             case 5:
-                    System.exit(0);
-                    break;
+                //displayAllOrders();
+                break;
+            case 6:
+                System.exit(0);
+                break;
             default:
-                    System.out.println("INVALID INPUT ");
-            }
-                main(args);
+                System.out.println("INVALID INPUT ");
         }
 
-
-    private static void updateFilm() {
-        System.out.print("Enter Film Name: ");
-        String filmName = sc1.nextLine();
-        filmName = sc1.nextLine();
-        System.out.print("Enter New Film Year: ");
-        int newFilmYear = sc1.nextInt();
-        sc1.nextLine();
-
-        Film f1 = new Film();
-        f1.setFilmName(filmName);
-        f1.setFilmYear(newFilmYear);
-
-        int n = filmservice.updateFilm(f1);
-
-        if (n > 0)
-            System.out.println("Film year updated successfully!");
-        else
-            System.out.println("Film not found");
+        main(args);
     }
 
 
-    public static void addFilm()
-        {
-            System.out.println("ENTER Film Name");
-            String filmName = sc1.nextLine();
-            filmName = sc1.nextLine();
 
-            System.out.println("ENTER Film Year ");
-            int filmYear = sc1.nextInt() ;
+    private static void removeProduct() {
+        System.out.println("Enter productName ");
+        String productName = sc.next();
 
-            System.out.println("ENTER Film Language  ");
-            String filmLanguage = sc1.nextLine();
-            filmLanguage = sc1.nextLine();
+        Product productToRemove = new Product();
+        productToRemove.setProductName(productName);
 
-            System.out.println("ENTER Film Rating ");
-            int filmRating = sc1.nextInt() ;
+        int rowsAffected = service.removeProduct(productToRemove);
 
-            Film newFilm = new Film(filmName,filmYear,filmLanguage,filmRating);
-            int n = filmservice.addFilm(newFilm);
-            System.out.println(n+" RECORD INSERTED !!");
-            System.out.println("\n\n");
+        if (rowsAffected > 0) {
+            System.out.println("Product removed successfully.");
+        } else {
+            System.out.println("Product not found");
         }
+    }
+
+
+    public static List<Product> displayAllProducts() {
+        List<Product> productList = service.displayAllProduct() ;
+        System.out.println("PRODUCT LIST:");
+        for (Product product : productList) {
+            System.out.println("Product Name: " + product.getProductName());
+            System.out.println("Quantity: " + product.getProductQty());
+            System.out.println("Price: " + product.getProductPrice());
+        }
+
+        return productList;
+    }
+
 }
+
+
 
 
 
