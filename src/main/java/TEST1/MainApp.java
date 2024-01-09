@@ -49,7 +49,6 @@ public class MainApp {
     }
 
 
-
     private static void removeProduct() {
         System.out.println("Enter productName ");
         String productName = sc.next();
@@ -68,7 +67,7 @@ public class MainApp {
 
 
     public static List<Product> displayAllProducts() {
-        List<Product> productList = service.displayAllProduct() ;
+        List<Product> productList = service.displayAllProduct();
         System.out.println("PRODUCT LIST:");
         for (Product product : productList) {
             System.out.println("Product Name: " + product.getProductName());
@@ -80,6 +79,9 @@ public class MainApp {
     }
 
 }
+
+
+
 
 
 
